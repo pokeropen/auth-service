@@ -1,0 +1,5 @@
+target/
+*.idea/
+*.setings/
+parent.iml
+auth-service.iml
