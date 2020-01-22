@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Flogger
 @RequestMapping("/authenticate")
 @Api(value = "Authorize user request on basis of Jwt Token", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-public class AuthenticateResource {
+public class AuthorizeResource {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -29,8 +29,8 @@ public class AuthenticateResource {
     private ValidationUtil validationUtil;
 
     @GetMapping
-    @ApiOperation(value = "Authenticate User on basis of JWT", response = Boolean.class)
-    public ResponseEntity<Boolean> authenticate(
+    @ApiOperation(value = "Authorize User on basis of JWT", response = Boolean.class)
+    public ResponseEntity<Boolean> authorize(
             @ApiParam(required = true, value = "A Valid JWT")
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authToken) {
 
