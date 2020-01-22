@@ -19,6 +19,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 
+import static com.open.poker.constants.Constants.EMAIL_NOT_AVAILABLE;
+import static com.open.poker.constants.Constants.USERNAME_NOT_AVAILABLE;
+
 @RestController
 @Flogger
 @RequestMapping(path = "/signup")
@@ -26,7 +29,7 @@ import javax.validation.Valid;
 public class SignUpResource {
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private UserProfileRepository repository;
 
     @PostMapping()
     @ApiOperation(value = "Sign up a new user", response = String.class)
@@ -36,22 +39,22 @@ public class SignUpResource {
 
         log.atInfo().log("Signing Up new User %s with email %s", request.getUsername(), request.getEmail());
 
-        if (userProfileRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username is already taken!!");
+        if (repository.findByUsernameOrEmail(request.getUsername(), request.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body(USERNAME_NOT_AVAILABLE);
         }
 
-        if (userProfileRepository.findByUsernameOrEmail(request.getEmail(), request.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Email is already taken!!");
+        if (repository.findByUsernameOrEmail(request.getEmail(), request.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body(EMAIL_NOT_AVAILABLE);
         }
 
-        var response = Try.of(() -> userProfileRepository.save(UserProfile.of(request)))
+        var response = Try.of(() -> repository.save(UserProfile.of(request)))
                 .orElse(Try.failure(new RuntimeException("Unable to save user : " + request.getUsername())));
 
         if (response.isSuccess()) {
             var location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/signup/{id}").buildAndExpand(response.get().getId()).toUri();
             return ResponseEntity.created(location).build();
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save user. Try Again");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response.getCause().getMessage());
         }
     }
 }

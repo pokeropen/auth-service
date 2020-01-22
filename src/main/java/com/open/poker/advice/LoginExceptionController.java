@@ -1,5 +1,6 @@
 package com.open.poker.advice;
 
+import com.open.poker.exception.InvalidJwtTokenException;
 import com.open.poker.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,5 +16,11 @@ public class LoginExceptionController extends ResponseEntityExceptionHandler {
     @ResponseBody
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidJwtTokenException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleInvalidJwtTokenException(InvalidJwtTokenException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

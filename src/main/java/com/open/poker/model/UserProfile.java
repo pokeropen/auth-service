@@ -22,6 +22,7 @@ public class UserProfile extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @With
     private Long id;
     @NonNull
     @With

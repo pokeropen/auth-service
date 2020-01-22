@@ -17,6 +17,7 @@ public class LoginRequest {
     private final String usernameOrEmail;
 
     @NonNull
+    @With
     @Size(min = 8, max = 20)
     @NotBlank(message = "Please provide a password")
     private final String password;

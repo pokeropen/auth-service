@@ -45,7 +45,7 @@ public class LoginResource {
 
         if (PasswordUtil.matchPwd(request.getPassword(), user.getPassword())) {
             log.atInfo().log("User %s is logged-in", user.getUsername());
-            return ResponseEntity.ok(new TokenResponse(jwtTokenUtil.generateToken(user.getUsername())));
+            return ResponseEntity.ok(new TokenResponse(jwtTokenUtil.generateToken(user.getUsername(), user.getEmail())));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_USER_PWD);
         }
