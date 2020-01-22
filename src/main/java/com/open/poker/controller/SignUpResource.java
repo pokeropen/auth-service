@@ -10,6 +10,7 @@ import io.vavr.control.Try;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ import static com.open.poker.constants.Constants.USERNAME_NOT_AVAILABLE;
 @RestController
 @Flogger
 @RequestMapping(path = "/signup")
-@Api(value = "Signing Up User to System", consumes = "application/json")
+@Api(value = "Signing Up User to System", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 public class SignUpResource {
 
     @Autowired

@@ -1,44 +1,42 @@
 package com.open.poker.controller;
 
-import com.open.poker.constants.Constants;
-import com.open.poker.exception.InvalidJwtTokenException;
-import com.open.poker.jwt.JwtTokenUtil;
+import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.ValidationUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.vavr.control.Try;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
-
 @RestController
 @Flogger
 @RequestMapping("/authenticate")
+@Api(value = "Authorize user request on basis of Jwt Token", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 public class AuthenticateResource {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private ValidationUtil validationUtil;
+
     @GetMapping
     @ApiOperation(value = "Authenticate User on basis of JWT", response = Boolean.class)
     public ResponseEntity<Boolean> authenticate(
             @ApiParam(required = true, value = "A Valid JWT")
-            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authorization) {
+            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authToken) {
 
-        log.atInfo().log("Authenticating User for token %s", authorization);
+        log.atInfo().log("Authenticating User for token %s", authToken);
 
-        if (Objects.nonNull(authorization) && authorization.startsWith(Constants.BEARER) && Try.of(() -> jwtTokenUtil.validateToken(authorization.substring(7)))
-                .getOrElseThrow(e -> new InvalidJwtTokenException(e.getMessage(), e))) {
-           return ResponseEntity.ok(true);
-       } else {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-       }
+        return validationUtil.isValidToken(authToken).fold(x -> ResponseEntity.badRequest().body(false),
+                x -> x ? ResponseEntity.ok(true) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false));
     }
 }

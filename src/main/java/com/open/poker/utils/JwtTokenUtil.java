@@ -1,4 +1,4 @@
-package com.open.poker.jwt;
+package com.open.poker.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.function.Function;
 
-import static com.open.poker.constants.Constants.JWT_TOKEN_ISSUER;
 import static com.open.poker.constants.Constants.JWT_TOKEN_VALIDITY;
 
 @Component
@@ -26,6 +25,11 @@ public class JwtTokenUtil implements Serializable {
     // retrieve username from jwt token
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    // retrieve username from jwt token
+    public String getIdFromToken(String token) {
+        return getClaimFromToken(token, Claims::getId);
     }
 
     // retrieve username from jwt token
@@ -55,10 +59,10 @@ public class JwtTokenUtil implements Serializable {
     }
 
     // generate token for user with username & email
-    public String generateToken(final String username, final String email) {
-        return Jwts.builder().setSubject(username).setAudience(email).setIssuer(JWT_TOKEN_ISSUER).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+    public String generateToken(final Long id, final String username, final String email) {
+        return Jwts.builder().setId(id.toString()).setSubject(username).setAudience(email).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000)).signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     // validate token

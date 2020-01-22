@@ -1,7 +1,7 @@
 package com.open.poker.controller;
 
-import com.open.poker.exception.InvalidJwtTokenException;
-import com.open.poker.jwt.JwtTokenUtil;
+import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.ValidationUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static com.open.poker.constants.TestConstants.*;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AuthenticateResource.class)
+@ContextConfiguration(classes = {AuthenticateResource.class, ValidationUtil.class})
 public class AuthenticateResourceTest {
 
     @Autowired
@@ -26,6 +26,7 @@ public class AuthenticateResourceTest {
 
     @MockBean
     private JwtTokenUtil jwtTokenUtil;
+
 
     @Before
     public void setUp() {
@@ -43,7 +44,7 @@ public class AuthenticateResourceTest {
     public void invalidTokenWithoutBearer() {
         var response = authenticateResource.authenticate(INVALID_TOKEN_WITHOUT_BEARER);
         Mockito.verify(jwtTokenUtil, Mockito.times(0)).validateToken(Mockito.anyString());
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         Assert.assertEquals(false, response.getBody());
     }
 
@@ -51,14 +52,16 @@ public class AuthenticateResourceTest {
     public void invalidEmptyToken() {
         var response = authenticateResource.authenticate(null);
         Mockito.verify(jwtTokenUtil, Mockito.times(0)).validateToken(Mockito.anyString());
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         Assert.assertEquals(false, response.getBody());
     }
 
-    @Test(expected = InvalidJwtTokenException.class)
+    @Test
     public void invalidTokenParsingError() {
         Mockito.when(jwtTokenUtil.validateToken(Mockito.anyString())).thenThrow(new RuntimeException());
-        authenticateResource.authenticate(INVALID_TOKEN_WITH_BEARER);
+        var response = authenticateResource.authenticate(INVALID_TOKEN_WITH_BEARER);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals(false, response.getBody());
     }
 
     @Test
@@ -66,7 +69,7 @@ public class AuthenticateResourceTest {
         Mockito.when(jwtTokenUtil.validateToken(Mockito.anyString())).thenReturn(false);
         var response = authenticateResource.authenticate(INVALID_TOKEN_WITH_BEARER);
         Mockito.verify(jwtTokenUtil, Mockito.times(1)).validateToken(Mockito.anyString());
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         Assert.assertEquals(false, response.getBody());
     }
 }

@@ -1,7 +1,7 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.UserNotFoundException;
-import com.open.poker.jwt.JwtTokenUtil;
+import com.open.poker.utils.JwtTokenUtil;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;
@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ import static com.open.poker.constants.Constants.INVALID_USER_PWD;
 @RestController
 @Flogger
 @RequestMapping(path = "/login")
-@Api(value = "Logging User to System", consumes = "application/json", produces = "application/json")
+@Api(value = "Logging User to System", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class LoginResource {
 
     @Autowired
@@ -45,7 +46,7 @@ public class LoginResource {
 
         if (PasswordUtil.matchPwd(request.getPassword(), user.getPassword())) {
             log.atInfo().log("User %s is logged-in", user.getUsername());
-            return ResponseEntity.ok(new TokenResponse(jwtTokenUtil.generateToken(user.getUsername(), user.getEmail())));
+            return ResponseEntity.ok(new TokenResponse(jwtTokenUtil.generateToken(user.getId(), user.getUsername(), user.getEmail())));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_USER_PWD);
         }

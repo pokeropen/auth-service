@@ -1,7 +1,7 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.UserNotFoundException;
-import com.open.poker.jwt.JwtTokenUtil;
+import com.open.poker.utils.JwtTokenUtil;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;

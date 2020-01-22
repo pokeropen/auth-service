@@ -1,16 +1,18 @@
 package com.open.poker.utils;
 
-import lombok.experimental.UtilityClass;
 import org.mindrot.jbcrypt.BCrypt;
 
-@UtilityClass
-public class PasswordUtil {
+public final class PasswordUtil {
 
-    public String hashPwd(final String pwd) {
+    private PasswordUtil() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
+    public static String hashPwd(final String pwd) {
         return BCrypt.hashpw(pwd, BCrypt.gensalt(10));
     }
 
-    public boolean matchPwd(final String pwd, final String hashPwd) {
+    public static boolean matchPwd(final String pwd, final String hashPwd) {
         return BCrypt.checkpw(pwd, hashPwd);
     }
 }
