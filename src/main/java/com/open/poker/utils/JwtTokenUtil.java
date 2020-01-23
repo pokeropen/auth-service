@@ -1,8 +1,10 @@
 package com.open.poker.utils;
 
+import com.open.poker.exception.InvalidJwtTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -22,39 +24,39 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    // retrieve username from jwt token
-    public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+    // retrieve username from jwt
+    public String getUsername(final String jwt) {
+        return getClaim(jwt, Claims::getSubject);
     }
 
-    // retrieve username from jwt token
-    public String getIdFromToken(String token) {
-        return getClaimFromToken(token, Claims::getId);
+    // retrieve username from jwt
+    public String getId(final String jwt) {
+        return getClaim(jwt, Claims::getId);
     }
 
-    // retrieve username from jwt token
-    public String getEmailFromToken(String token) {
-        return getClaimFromToken(token, Claims::getAudience);
+    // retrieve username from jwt jwt
+    public String getEmail(final String jwt) {
+        return getClaim(jwt, Claims::getAudience);
     }
 
-    //  retrieve expiration date from jwt token
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
+    //  retrieve expiration date from jwt jwt
+    private Date getExpirationDate(String jwt) {
+        return getClaim(jwt, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(final String token, final Function<Claims, T> claimsResolver) {
-        final Claims claims = getAllClaimsFromToken(token);
+    private <T> T getClaim(final String jwt, final Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaims(jwt);
         return claimsResolver.apply(claims);
     }
 
-    // for retrieveing any information from token we will need the secret key
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    // for retrieveing any information from jwt we will need the secret key
+    private Claims getAllClaims(final String jwt) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(jwt).getBody();
     }
 
     // check if the token has expired
-    private boolean hasTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
+    private boolean hasExpired(String token) {
+        final Date expiration = getExpirationDate(token);
         return expiration.before(new Date());
     }
 
@@ -65,8 +67,8 @@ public class JwtTokenUtil implements Serializable {
                 .compact();
     }
 
-    // validate token
-    public boolean validateToken(final String token) {
-        return !hasTokenExpired(token);
+    // validate jwt
+    public boolean validateToken(final String jwt) {
+        return Try.of(() -> !hasExpired(jwt)).getOrElseThrow(x -> new InvalidJwtTokenException(x.getMessage(), x.getCause()));
     }
 }

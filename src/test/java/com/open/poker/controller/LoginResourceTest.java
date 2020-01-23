@@ -1,15 +1,13 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.UserNotFoundException;
-import com.open.poker.utils.JwtTokenUtil;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;
-import org.junit.Assert;
+import com.open.poker.utils.JwtTokenUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -21,6 +19,9 @@ import java.util.Optional;
 
 import static com.open.poker.constants.Constants.INVALID_USER_PWD;
 import static com.open.poker.constants.TestConstants.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
@@ -40,22 +41,22 @@ public class LoginResourceTest {
 
     @Before
     public void setUp() {
-        Mockito.when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(user));
-        Mockito.when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(user));
     }
 
     @Test
     public void validateLoginPositiveWithUsername() {
         var response = loginResource.loginUser(loginReq);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        Assert.assertTrue(response.getBody() instanceof TokenResponse);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertTrue(response.getBody() instanceof TokenResponse);
     }
 
     @Test
     public void validateLoginPositiveWithEmail() {
         var response = loginResource.loginUser(loginReq.withUsernameOrEmail(EMAIL));
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        Assert.assertTrue(response.getBody() instanceof TokenResponse);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertTrue(response.getBody() instanceof TokenResponse);
     }
 
     @Test(expected = UserNotFoundException.class)
@@ -71,14 +72,14 @@ public class LoginResourceTest {
     @Test
     public void validateLoginFailWithUsernamePassword() {
         var response = loginResource.loginUser(loginReq.withPassword(PASSWORD_NEW));
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
-        Assert.assertEquals(response.getBody(), INVALID_USER_PWD);
+        assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        assertEquals(response.getBody(), INVALID_USER_PWD);
     }
 
     @Test
     public void validateLoginFailWithEmailPassword() {
         var response = loginResource.loginUser(loginReq.withUsernameOrEmail(EMAIL).withPassword(PASSWORD_NEW));
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
-        Assert.assertEquals(response.getBody(), INVALID_USER_PWD);
+        assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        assertEquals(response.getBody(), INVALID_USER_PWD);
     }
 }
