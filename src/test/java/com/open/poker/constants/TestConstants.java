@@ -2,7 +2,9 @@ package com.open.poker.constants;
 
 import com.open.poker.model.UserProfile;
 import com.open.poker.schema.ChangePasswordRequest;
-import com.open.poker.utils.PasswordUtil;
+import com.open.poker.schema.SignupRequest;
+
+import static com.open.poker.utils.PasswordUtil.hashPwd;
 
 public final class TestConstants {
     public static final String USERNAME = "daim";
@@ -18,11 +20,15 @@ public final class TestConstants {
     public static final String CORRUPT_TOKEN = "Bearer TOKEN_CORRUPT";
     public static final String INVALID_TOKEN_WITHOUT_BEARER = "TOKEN_INVALID";
     public static final String INVALID_TOKEN_WITH_BEARER = "Bearer TOKEN_INVALID";
+    public static final int MIN_VALID_AGE = 18;
+    public static final int MAX_VALID_AGE = 120;
 
-    public static final UserProfile user = UserProfile.builder().username(USERNAME).email(EMAIL)
-            .password(PasswordUtil.hashPwd(PASSWORD)).firstName(FIRST_NAME).lastName(LAST_NAME).id(1L).build();
+    public static final UserProfile user = UserProfile.builder().username(USERNAME).email(EMAIL).password(hashPwd(PASSWORD))
+            .firstName(FIRST_NAME).lastName(LAST_NAME).id(1L).age(MIN_VALID_AGE).build();
 
     public static final ChangePasswordRequest cpr = new ChangePasswordRequest(PASSWORD, PASSWORD_NEW, PASSWORD_NEW);
+
+    public static final SignupRequest signUpReq = new SignupRequest(USERNAME, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, 18);
 
     private TestConstants() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

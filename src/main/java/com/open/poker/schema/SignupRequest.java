@@ -4,9 +4,7 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Value()
 public class SignupRequest {
@@ -15,4 +13,5 @@ public class SignupRequest {
     @NonNull @Size(min = 8, max = 20) @NotBlank(message = "Please provide a password")private final String password;
     @With private final String firstName;
     @With private final String lastName;
+    @NonNull @Min(18) @Max(120) @With private final int age;
 }

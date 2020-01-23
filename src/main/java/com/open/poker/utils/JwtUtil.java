@@ -13,11 +13,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.function.Function;
 
-import static com.open.poker.constants.Constants.JWT_TOKEN_VALIDITY;
+import static com.open.poker.constants.Constants.JWT_VALIDITY;
 
 @Component
 @PropertySource("classpath:application.properties")
-public class JwtTokenUtil implements Serializable {
+public class JwtUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
 
@@ -63,7 +63,7 @@ public class JwtTokenUtil implements Serializable {
     // generate token for user with username & email
     public String generateToken(final Long id, final String username, final String email) {
         return Jwts.builder().setId(id.toString()).setSubject(username).setAudience(email).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000)).signWith(SignatureAlgorithm.HS512, secret)
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_VALIDITY * 1000)).signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 

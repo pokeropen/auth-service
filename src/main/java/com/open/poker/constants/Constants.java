@@ -2,7 +2,7 @@ package com.open.poker.constants;
 
 public final class Constants {
 
-    public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60;
+    public static final long JWT_VALIDITY = 24 * 60 * 60;
 
     // Error Constants
     public static final String BEARER = "Bearer";

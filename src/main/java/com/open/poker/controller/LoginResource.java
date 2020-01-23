@@ -1,7 +1,7 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.UserNotFoundException;
-import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.JwtUtil;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;
@@ -30,7 +30,7 @@ import static com.open.poker.constants.Constants.INVALID_USER_PWD;
 public class LoginResource {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
     private UserProfileRepository repository;
@@ -41,12 +41,12 @@ public class LoginResource {
             @ApiParam(value = "User details to log into system", required = true) @Valid @RequestBody LoginRequest request) {
 
         log.atInfo().log("User %s trying to login", request.getUsernameOrEmail());
-        var user = repository.findByUsernameOrEmail(request.getUsernameOrEmail(), request.getUsernameOrEmail()).
+        var user = repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(request.getUsernameOrEmail(), request.getUsernameOrEmail()).
                 orElseThrow(() -> new UserNotFoundException("User Not Found with name : " + request.getUsernameOrEmail()));
 
         if (PasswordUtil.matchPwd(request.getPassword(), user.getPassword())) {
             log.atInfo().log("User %s is logged-in", user.getUsername());
-            return ResponseEntity.ok(new TokenResponse(jwtTokenUtil.generateToken(user.getId(), user.getUsername(), user.getEmail())));
+            return ResponseEntity.ok(new TokenResponse(jwtUtil.generateToken(user.getId(), user.getUsername(), user.getEmail())));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_USER_PWD);
         }

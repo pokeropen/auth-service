@@ -4,7 +4,7 @@ import com.open.poker.exception.UserNotFoundException;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;
-import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.JwtUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {LoginResource.class, JwtTokenUtil.class})
+@ContextConfiguration(classes = {LoginResource.class, JwtUtil.class})
 public class LoginResourceTest {
 
     @Autowired
@@ -35,14 +35,14 @@ public class LoginResourceTest {
     private UserProfileRepository userProfileRepository;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     private final LoginRequest loginReq = new LoginRequest(USERNAME, PASSWORD);
 
     @Before
     public void setUp() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(user));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
     }
 
     @Test

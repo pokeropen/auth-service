@@ -1,6 +1,6 @@
 package com.open.poker.controller;
 
-import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.ValidationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Flogger
-@RequestMapping("/authenticate")
+@RequestMapping("/authorize")
 @Api(value = "Authorize user request on basis of Jwt Token", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 public class AuthorizeResource {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
     private ValidationUtil validationUtil;

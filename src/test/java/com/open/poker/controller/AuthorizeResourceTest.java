@@ -1,7 +1,7 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.InvalidJwtTokenException;
-import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.ValidationUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +27,12 @@ public class AuthorizeResourceTest {
     private AuthorizeResource authorizeResource;
 
     @MockBean
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
 
     @Before
     public void setUp() {
-        when(jwtTokenUtil.validateToken(TOKEN)).thenReturn(true);
+        when(jwtUtil.validateToken(TOKEN)).thenReturn(true);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class AuthorizeResourceTest {
     @Test
     public void invalidTokenWithoutBearer() {
         var response = authorizeResource.authorize(INVALID_TOKEN_WITHOUT_BEARER);
-        verify(jwtTokenUtil, times(0)).validateToken(anyString());
+        verify(jwtUtil, times(0)).validateToken(anyString());
         assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         assertEquals(false, response.getBody());
     }
@@ -53,14 +53,14 @@ public class AuthorizeResourceTest {
     @Test
     public void invalidEmptyToken() {
         var response = authorizeResource.authorize(null);
-        verify(jwtTokenUtil, times(0)).validateToken(anyString());
+        verify(jwtUtil, times(0)).validateToken(anyString());
         assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         assertEquals(false, response.getBody());
     }
 
     @Test
     public void invalidTokenParsingError() {
-        when(jwtTokenUtil.validateToken(anyString())).thenThrow(new InvalidJwtTokenException());
+        when(jwtUtil.validateToken(anyString())).thenThrow(new InvalidJwtTokenException());
         var response = authorizeResource.authorize(INVALID_TOKEN_WITH_BEARER);
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(false, response.getBody());
@@ -68,9 +68,9 @@ public class AuthorizeResourceTest {
 
     @Test
     public void invalidTokenExpired() {
-        when(jwtTokenUtil.validateToken(anyString())).thenReturn(false);
+        when(jwtUtil.validateToken(anyString())).thenReturn(false);
         var response = authorizeResource.authorize(INVALID_TOKEN_WITH_BEARER);
-        verify(jwtTokenUtil, times(1)).validateToken(anyString());
+        verify(jwtUtil, times(1)).validateToken(anyString());
         assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
         assertEquals(false, response.getBody());
     }

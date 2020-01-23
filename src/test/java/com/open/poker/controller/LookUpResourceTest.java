@@ -30,8 +30,8 @@ public class LookUpResourceTest {
 
     @Before
     public void setUp() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(user));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
     }
 
     @Test

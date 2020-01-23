@@ -32,7 +32,7 @@ public class LookUpResource {
             @ApiParam(value = "username to check", required = true)
             @PathVariable("name") @NotBlank @Size(min = 4, max = 20) String username) {
         log.atInfo().log("Checking if username %s is available", username);
-        var response = repository.findByUsernameOrEmail(username, username).isPresent();
+        var response = repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(username, username).isPresent();
         return ResponseEntity.ok(response);
     }
 
@@ -42,7 +42,7 @@ public class LookUpResource {
             @ApiParam(value = "email to check", required = true)
             @PathVariable("email") @NotBlank @Email @Size(min = 1, max = 40) String email) {
         log.atInfo().log("Checking if email %s is available", email);
-        var response = repository.findByUsernameOrEmail(email, email).isPresent();
+        var response = repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(email, email).isPresent();
         return ResponseEntity.ok(response);
     }
 }

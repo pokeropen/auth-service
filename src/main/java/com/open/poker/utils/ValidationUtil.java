@@ -12,9 +12,9 @@ import static com.open.poker.constants.Constants.BEARER;
 public class ValidationUtil {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     public Try<Boolean> isValidToken(final String authToken) {
-        return Try.of(() -> Objects.nonNull(authToken) && authToken.startsWith(BEARER) && jwtTokenUtil.validateToken(authToken.substring(7)));
+        return Try.of(() -> Objects.nonNull(authToken) && authToken.startsWith(BEARER) && jwtUtil.validateToken(authToken.substring(7)));
     }
 }

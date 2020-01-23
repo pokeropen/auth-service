@@ -24,11 +24,11 @@ public class ValidationUtilTest {
     private ValidationUtil validationUtil;
 
     @MockBean
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     @Before
     public void setUp() {
-        when(jwtTokenUtil.validateToken(TOKEN)).thenReturn(true);
+        when(jwtUtil.validateToken(TOKEN)).thenReturn(true);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ValidationUtilTest {
         var response = validationUtil.isValidToken(null);
         assertTrue(response.isSuccess());
         assertFalse(response.get());
-        verifyNoInteractions(jwtTokenUtil);
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ValidationUtilTest {
         var response = validationUtil.isValidToken("");
         assertTrue(response.isSuccess());
         assertFalse(response.get());
-        verifyNoInteractions(jwtTokenUtil);
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ValidationUtilTest {
         var response = validationUtil.isValidToken(INVALID_TOKEN_WITHOUT_BEARER);
         assertTrue(response.isSuccess());
         assertFalse(response.get());
-        verifyNoInteractions(jwtTokenUtil);
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ValidationUtilTest {
 
     @Test
     public void testInvalidTokenWithException() {
-        when(jwtTokenUtil.validateToken(anyString())).thenThrow(new InvalidJwtTokenException());
+        when(jwtUtil.validateToken(anyString())).thenThrow(new InvalidJwtTokenException());
         var response = validationUtil.isValidToken(INVALID_TOKEN_WITH_BEARER);
         assertTrue(response.isFailure());
     }

@@ -3,7 +3,7 @@ package com.open.poker.controller;
 import com.google.common.flogger.LazyArgs;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.ChangePasswordRequest;
-import com.open.poker.utils.JwtTokenUtil;
+import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.ValidationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ public class ChangePasswordResource {
     private UserProfileRepository repository;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
     private ValidationUtil validationUtil;
@@ -60,8 +60,7 @@ public class ChangePasswordResource {
     }
 
     private ResponseEntity<Boolean> updatePwd(final String jwt, final ChangePasswordRequest request) {
-        return repository.findById(Long.parseLong(jwtTokenUtil.getId(jwt)))
-                .filter(up -> matchPwd(request.getOldPassword(), up.getPassword()))
+        return repository.findById(Long.parseLong(jwtUtil.getId(jwt))).filter(up -> matchPwd(request.getOldPassword(), up.getPassword()))
                 .map(up -> repository.save(up.withPassword(hashPwd(request.getNewPassword()))))
                 .isPresent() ? ResponseEntity.ok(true) : ResponseEntity.status(NOT_FOUND).body(false);
     }

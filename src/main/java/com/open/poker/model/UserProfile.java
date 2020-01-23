@@ -1,14 +1,11 @@
 package com.open.poker.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.open.poker.schema.SignupRequest;
 import com.open.poker.utils.PasswordUtil;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Optional;
 
 @Entity
@@ -32,14 +29,12 @@ public class UserProfile extends AuditModel {
     private String username;
     @NonNull
     @With
-    @JsonIgnore
     @NotBlank
     @Size(min = 8, max = 128)
     @Column(nullable = false)
     private String password;
     @NonNull
     @With
-    @JsonIgnore
     @Email
     @Size(min = 8, max = 40)
     @Column(nullable = false)
@@ -54,11 +49,23 @@ public class UserProfile extends AuditModel {
     @NotBlank
     @Size(min = 1, max = 20)
     private String lastName;
-
+    @NonNull
+    @With
+    @Min(18)
+    @Max(120)
+    private Integer age;
+    @NonNull
+    @With
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean isBlocked = false;
+    @NonNull
+    @With
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean isDeleted = false;
 
     public static UserProfile of(final SignupRequest request) {
         return new UserProfileBuilder().email(request.getEmail()).username(request.getUsername())
                 .password(PasswordUtil.hashPwd(request.getPassword())).firstName(Optional.ofNullable(request.getFirstName()).orElse(request.getUsername()))
-                .lastName(Optional.ofNullable(request.getLastName()).orElse(request.getUsername())).build();
+                .lastName(Optional.ofNullable(request.getLastName()).orElse(request.getUsername())).age(request.getAge()).build();
     }
 }

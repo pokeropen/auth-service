@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 
 import static com.open.poker.constants.Constants.EMAIL_NOT_AVAILABLE;
 import static com.open.poker.constants.Constants.USERNAME_NOT_AVAILABLE;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentContextPath;
 
 @RestController
 @Flogger
@@ -40,22 +40,22 @@ public class SignUpResource {
 
         log.atInfo().log("Signing Up new User %s with email %s", request.getUsername(), request.getEmail());
 
-        if (repository.findByUsernameOrEmail(request.getUsername(), request.getUsername()).isPresent()) {
+        if (repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(request.getUsername(), request.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body(USERNAME_NOT_AVAILABLE);
         }
 
-        if (repository.findByUsernameOrEmail(request.getEmail(), request.getEmail()).isPresent()) {
+        if (repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(request.getEmail(), request.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body(EMAIL_NOT_AVAILABLE);
         }
 
-        var response = Try.of(() -> repository.save(UserProfile.of(request)))
+        var res = Try.of(() -> repository.save(UserProfile.of(request)))
                 .orElse(Try.failure(new RuntimeException("Unable to save user : " + request.getUsername())));
 
-        if (response.isSuccess()) {
-            var location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/signup/{id}").buildAndExpand(response.get().getId()).toUri();
+        if (res.isSuccess()) {
+            var location = fromCurrentContextPath().path("/signup/{id}").buildAndExpand(res.get().getId()).toUri();
             return ResponseEntity.created(location).build();
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response.getCause().getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res.getCause().getMessage());
         }
     }
 }

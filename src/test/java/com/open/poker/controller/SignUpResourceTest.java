@@ -2,7 +2,6 @@ package com.open.poker.controller;
 
 import com.open.poker.model.UserProfile;
 import com.open.poker.repository.UserProfileRepository;
-import com.open.poker.schema.SignupRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +35,11 @@ public class SignUpResourceTest {
     @MockBean
     private UserProfileRepository userProfileRepository;
 
-    private final SignupRequest signUpReq = new SignupRequest(USERNAME, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME);
+    final UserProfile user = UserProfile.of(signUpReq);
 
     @Before
     public void setUp() {
-        when(userProfileRepository.findByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(anyString(), anyString())).thenReturn(Optional.empty());
         when(userProfileRepository.save(any(UserProfile.class))).thenReturn(UserProfile.of(signUpReq).withId(1L));
     }
 
@@ -53,8 +52,8 @@ public class SignUpResourceTest {
 
     @Test
     public void validateSignupFailUsername() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
         var response = signUpResource.signUpUser(signUpReq.withEmail(EMAIL_NEW));
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(response.getBody(), USERNAME_NOT_AVAILABLE);
@@ -62,8 +61,8 @@ public class SignUpResourceTest {
 
     @Test
     public void validateSignupFailEmail() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
         var response = signUpResource.signUpUser(signUpReq.withUsername(USERNAME_NEW));
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(response.getBody(), EMAIL_NOT_AVAILABLE);
@@ -71,8 +70,8 @@ public class SignUpResourceTest {
 
     @Test
     public void validateSignupFailException() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
         when(userProfileRepository.save(any(UserProfile.class))).thenThrow(RuntimeException.class);
         var response = signUpResource.signUpUser(signUpReq.withUsername(USERNAME_NEW).withEmail(EMAIL_NEW));
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,8 +80,8 @@ public class SignUpResourceTest {
 
     @Test
     public void validateSignupPositiveNewUsernameEmail() {
-        when(userProfileRepository.findByUsernameOrEmail(USERNAME, USERNAME)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
-        when(userProfileRepository.findByUsernameOrEmail(EMAIL, EMAIL)).thenReturn(Optional.of(UserProfile.of(signUpReq)));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(USERNAME, USERNAME)).thenReturn(Optional.of(user));
+        when(userProfileRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(EMAIL, EMAIL)).thenReturn(Optional.of(user));
         var response = signUpResource.signUpUser(signUpReq.withUsername(USERNAME_NEW).withEmail(EMAIL_NEW));
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
         assertTrue(Objects.requireNonNull(response.getHeaders().getLocation()).toString().endsWith("1"));
