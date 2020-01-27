@@ -37,7 +37,7 @@ public class ChangePasswordResource {
     private ValidationUtil validationUtil;
 
     @PostMapping
-    @ApiOperation(value = "Sign up a new user", response = String.class)
+    @ApiOperation(value = "Change password of user", response = String.class)
     public ResponseEntity<Boolean> changePassword(
             @ApiParam(required = true, value = "A Valid JWT")
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authToken,
