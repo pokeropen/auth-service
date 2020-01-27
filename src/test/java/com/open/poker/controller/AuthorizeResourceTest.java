@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -17,6 +16,7 @@ import static com.open.poker.constants.TestConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
@@ -38,7 +38,7 @@ public class AuthorizeResourceTest {
     @Test
     public void validToken() {
         var response = authorizeResource.authorize(VALID_TOKEN);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getStatusCode(), OK);
         assertEquals(true, response.getBody());
     }
 
@@ -46,7 +46,7 @@ public class AuthorizeResourceTest {
     public void invalidTokenWithoutBearer() {
         var response = authorizeResource.authorize(INVALID_TOKEN_WITHOUT_BEARER);
         verify(jwtUtil, times(0)).validateToken(anyString());
-        assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        assertEquals(response.getStatusCode(), FORBIDDEN);
         assertEquals(false, response.getBody());
     }
 
@@ -54,7 +54,7 @@ public class AuthorizeResourceTest {
     public void invalidEmptyToken() {
         var response = authorizeResource.authorize(null);
         verify(jwtUtil, times(0)).validateToken(anyString());
-        assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        assertEquals(response.getStatusCode(), FORBIDDEN);
         assertEquals(false, response.getBody());
     }
 
@@ -62,7 +62,7 @@ public class AuthorizeResourceTest {
     public void invalidTokenParsingError() {
         when(jwtUtil.validateToken(anyString())).thenThrow(new InvalidJwtTokenException());
         var response = authorizeResource.authorize(INVALID_TOKEN_WITH_BEARER);
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(response.getStatusCode(), BAD_REQUEST);
         assertEquals(false, response.getBody());
     }
 
@@ -71,7 +71,7 @@ public class AuthorizeResourceTest {
         when(jwtUtil.validateToken(anyString())).thenReturn(false);
         var response = authorizeResource.authorize(INVALID_TOKEN_WITH_BEARER);
         verify(jwtUtil, times(1)).validateToken(anyString());
-        assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        assertEquals(response.getStatusCode(), FORBIDDEN);
         assertEquals(false, response.getBody());
     }
 }

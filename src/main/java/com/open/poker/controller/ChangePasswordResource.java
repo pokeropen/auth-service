@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import static com.open.poker.utils.PasswordUtil.*;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @Flogger
@@ -56,7 +55,7 @@ public class ChangePasswordResource {
                                     log.atSevere().log("%s", LazyArgs.lazy(() ->"Exception while updating password for " + authToken));
                                     return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(false);
                                 })
-                        : ResponseEntity.badRequest().body(false));
+                        : ResponseEntity.status(FORBIDDEN).body(false));
     }
 
     private ResponseEntity<Boolean> updatePwd(final String jwt, final ChangePasswordRequest request) {

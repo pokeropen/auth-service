@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -22,6 +21,7 @@ import static com.open.poker.constants.TestConstants.*;
 import static com.open.poker.utils.PasswordUtil.hashPwd;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
@@ -54,7 +54,7 @@ public class ChangePasswordResourceTest {
     @Test
     public void validChangePwdReq() {
         var response = changePasswordResource.changePassword(VALID_TOKEN, cpr);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getStatusCode(), OK);
         assertEquals(true, response.getBody());
     }
 
@@ -64,7 +64,7 @@ public class ChangePasswordResourceTest {
         verifyNoInteractions(jwtUtil);
         verifyNoInteractions(repository);
         verifyNoInteractions(validationUtil);
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(response.getStatusCode(), BAD_REQUEST);
         assertEquals(false, response.getBody());
     }
 
@@ -74,7 +74,7 @@ public class ChangePasswordResourceTest {
         verifyNoInteractions(jwtUtil);
         verifyNoInteractions(repository);
         verifyNoInteractions(validationUtil);
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(response.getStatusCode(), BAD_REQUEST);
         assertEquals(false, response.getBody());
     }
 
@@ -83,7 +83,7 @@ public class ChangePasswordResourceTest {
         var response = changePasswordResource.changePassword(INVALID_TOKEN_WITH_BEARER, cpr);
         verifyNoInteractions(jwtUtil);
         verifyNoInteractions(repository);
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(response.getStatusCode(), FORBIDDEN);
         assertEquals(false, response.getBody());
     }
 
@@ -92,7 +92,7 @@ public class ChangePasswordResourceTest {
         var response = changePasswordResource.changePassword(CORRUPT_TOKEN, cpr);
         verifyNoInteractions(jwtUtil);
         verifyNoInteractions(repository);
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(response.getStatusCode(), BAD_REQUEST);
         assertEquals(false, response.getBody());
     }
 
@@ -100,7 +100,7 @@ public class ChangePasswordResourceTest {
     public void invalidTokenWithWrongId() {
         when(jwtUtil.getId(TOKEN)).thenReturn("2");
         var response = changePasswordResource.changePassword(VALID_TOKEN, cpr);
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(response.getStatusCode(), NOT_FOUND);
         assertEquals(false, response.getBody());
     }
 
@@ -108,7 +108,7 @@ public class ChangePasswordResourceTest {
     public void invalidTokenWithWrongPassword() {
         when(repository.findById(1L)).thenReturn(Optional.of(user.withPassword(hashPwd(PASSWORD_NEW))));
         var response = changePasswordResource.changePassword(VALID_TOKEN, cpr);
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(response.getStatusCode(), NOT_FOUND);
         assertEquals(false, response.getBody());
     }
 
@@ -116,7 +116,7 @@ public class ChangePasswordResourceTest {
     public void invalidWithSaveFailedException() {
         when(repository.save(any(UserProfile.class))).thenThrow(new RuntimeException());
         var response = changePasswordResource.changePassword(VALID_TOKEN, cpr);
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusCode(), INTERNAL_SERVER_ERROR);
         assertEquals(false, response.getBody());
     }
 }
