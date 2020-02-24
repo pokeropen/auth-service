@@ -8,4 +8,7 @@ ENV POSTGRES_DB postgres
 
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
+ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,address=*:9000,server=y,suspend=n
+EXPOSE 9000
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
