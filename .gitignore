@@ -2,3 +2,5 @@ target/
 *.idea/
 *.setings/
 auth-service.iml
+.DS_Store
+.jpb/

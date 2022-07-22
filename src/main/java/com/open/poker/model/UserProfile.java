@@ -3,6 +3,7 @@ package com.open.poker.model;
 import com.open.poker.schema.SignupRequest;
 import com.open.poker.utils.PasswordUtil;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -63,7 +64,7 @@ public class UserProfile extends AuditModel {
     @Column(columnDefinition = "boolean default false", nullable = false)
     private boolean isDeleted = false;
 
-    public static UserProfile of(final SignupRequest request) {
+    public static UserProfile of(@NotNull final SignupRequest request) {
         return new UserProfileBuilder().email(request.getEmail()).username(request.getUsername())
                 .password(PasswordUtil.hashPwd(request.getPassword())).firstName(Optional.ofNullable(request.getFirstName()).orElse(request.getUsername()))
                 .lastName(Optional.ofNullable(request.getLastName()).orElse(request.getUsername())).age(request.getAge()).build();
