@@ -5,7 +5,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.open.poker.constants.TestConstants.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 public class PasswordUtilTest {
