@@ -4,8 +4,8 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Value
 public class ChangePasswordRequest {

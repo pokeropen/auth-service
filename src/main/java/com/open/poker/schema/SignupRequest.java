@@ -1,10 +1,13 @@
 package com.open.poker.schema;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
-
-import javax.validation.constraints.*;
 
 @Value()
 public class SignupRequest {
