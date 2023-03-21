@@ -4,3 +4,4 @@ target/
 auth-service.iml
 .DS_Store
 .jpb/
+.java-version
