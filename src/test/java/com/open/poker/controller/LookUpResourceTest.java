@@ -13,7 +13,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Optional;
 
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.EMAIL;
+import static com.open.poker.constants.TestConstants.EMAIL_NEW;
+import static com.open.poker.constants.TestConstants.USERNAME;
+import static com.open.poker.constants.TestConstants.USERNAME_NEW;
+import static com.open.poker.constants.TestConstants.user;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 

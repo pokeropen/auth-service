@@ -9,7 +9,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.INVALID_TOKEN_WITHOUT_BEARER;
+import static com.open.poker.constants.TestConstants.INVALID_TOKEN_WITH_BEARER;
+import static com.open.poker.constants.TestConstants.TOKEN;
+import static com.open.poker.constants.TestConstants.VALID_TOKEN;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;

@@ -3,21 +3,19 @@ package com.open.poker.controller;
 import com.open.poker.model.UserProfile;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.SignupRequest;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.vavr.control.Try;
+import jakarta.validation.Valid;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
 
 import static com.open.poker.constants.Constants.EMAIL_NOT_AVAILABLE;
 import static com.open.poker.constants.Constants.USERNAME_NOT_AVAILABLE;
@@ -26,16 +24,16 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RestController
 @Flogger
 @RequestMapping(path = "/signup")
-@Api(value = "Signing Up User to System", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+@Tag(name = "SignUp Resource", description = "Signing Up User to System")
 public class SignUpResource {
 
     @Autowired
     private UserProfileRepository repository;
 
     @PostMapping()
-    @ApiOperation(value = "Sign up a new user", response = String.class)
+    @Operation(summary = "Sign up a new user")
     public ResponseEntity<?> signUpUser(
-            @ApiParam(value = "Signing-in object of new User to store database", required = true)
+            @Parameter(description = "Signing-in object of new User to store database", required = true)
             @Valid @RequestBody SignupRequest request) {
 
         log.atInfo().log("Signing Up new User %s with email %s", request.getUsername(), request.getEmail());

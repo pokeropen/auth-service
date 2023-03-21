@@ -17,7 +17,11 @@ import java.util.Optional;
 
 import static com.open.poker.constants.Constants.EMAIL_NOT_AVAILABLE;
 import static com.open.poker.constants.Constants.USERNAME_NOT_AVAILABLE;
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.EMAIL;
+import static com.open.poker.constants.TestConstants.EMAIL_NEW;
+import static com.open.poker.constants.TestConstants.USERNAME;
+import static com.open.poker.constants.TestConstants.USERNAME_NEW;
+import static com.open.poker.constants.TestConstants.signUpReq;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;

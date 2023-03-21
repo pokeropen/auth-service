@@ -2,13 +2,12 @@ package com.open.poker.controller;
 
 import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.ValidationUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,7 +19,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @RestController
 @Flogger
 @RequestMapping("/authorize")
-@Api(value = "Authorize user request on basis of Jwt Token", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+@Tag(name = "Authorization Resource", description = "Authorize user request on basis of Jwt Token")
 public class AuthorizeResource {
 
     @Autowired
@@ -30,9 +29,9 @@ public class AuthorizeResource {
     private ValidationUtil validationUtil;
 
     @GetMapping
-    @ApiOperation(value = "Authorize User on basis of JWT", response = Boolean.class)
+    @Operation(summary = "Authorize User on basis of JWT")
     public ResponseEntity<Boolean> authorize(
-            @ApiParam(required = true, value = "A Valid JWT")
+            @Parameter(required = true, description = "A Valid JWT")
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authToken) {
 
         log.atInfo().log("Authenticating User for token %s", authToken);

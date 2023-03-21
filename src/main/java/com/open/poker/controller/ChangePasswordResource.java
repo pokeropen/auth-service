@@ -5,26 +5,32 @@ import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.ChangePasswordRequest;
 import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.ValidationUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.vavr.control.Try;
+import jakarta.validation.Valid;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
-
-import static com.open.poker.utils.PasswordUtil.*;
-import static org.springframework.http.HttpStatus.*;
+import static com.open.poker.utils.PasswordUtil.hashPwd;
+import static com.open.poker.utils.PasswordUtil.isValidChangePwdReq;
+import static com.open.poker.utils.PasswordUtil.matchPwd;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @Flogger
 @RequestMapping("/changePassword")
-@Api(value = "Change password of User", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+@Tag(name = "Change Password Resource", description = "Change password of User")
 public class ChangePasswordResource {
 
     @Autowired
@@ -37,11 +43,11 @@ public class ChangePasswordResource {
     private ValidationUtil validationUtil;
 
     @PostMapping
-    @ApiOperation(value = "Change password of user", response = String.class)
+    @Operation(summary = "Change password of user")
     public ResponseEntity<Boolean> changePassword(
-            @ApiParam(required = true, value = "A Valid JWT")
+            @Parameter(required = true, description = "A Valid JWT")
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authToken,
-            @ApiParam(value = "Change Password Request", required = true)
+            @Parameter(description = "Change Password Request", required = true)
             @Valid @RequestBody ChangePasswordRequest request) {
 
         log.atInfo().log("Change Password Req with %s", authToken);

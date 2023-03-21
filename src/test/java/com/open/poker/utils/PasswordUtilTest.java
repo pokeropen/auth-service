@@ -4,7 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.PASSWORD;
+import static com.open.poker.constants.TestConstants.PASSWORD_NEW;
+import static com.open.poker.constants.TestConstants.cpr;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

@@ -12,11 +12,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.INVALID_TOKEN_WITHOUT_BEARER;
+import static com.open.poker.constants.TestConstants.INVALID_TOKEN_WITH_BEARER;
+import static com.open.poker.constants.TestConstants.TOKEN;
+import static com.open.poker.constants.TestConstants.VALID_TOKEN;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.OK;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)

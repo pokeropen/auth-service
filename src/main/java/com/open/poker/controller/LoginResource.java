@@ -1,32 +1,34 @@
 package com.open.poker.controller;
 
 import com.open.poker.exception.UserNotFoundException;
-import com.open.poker.utils.JwtUtil;
 import com.open.poker.repository.UserProfileRepository;
 import com.open.poker.schema.LoginRequest;
 import com.open.poker.schema.TokenResponse;
+import com.open.poker.utils.JwtUtil;
 import com.open.poker.utils.PasswordUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.flogger.Flogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
-
 import static com.open.poker.constants.Constants.INVALID_USER_PWD;
 
 @RestController
 @Flogger
 @RequestMapping(path = "/login")
-@Api(value = "Logging User to System", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Logging Resource", description = "Logging User to System")
 public class LoginResource {
 
     @Autowired
@@ -36,9 +38,14 @@ public class LoginResource {
     private UserProfileRepository repository;
 
     @PostMapping()
-    @ApiOperation(value = "To log-in user", response = String.class)
+    @Operation(summary = "To log-in user")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "Login Successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema =  @Schema(implementation = TokenResponse.class))})
+    })
     public ResponseEntity<?> loginUser(
-            @ApiParam(value = "User details to log into system", required = true) @Valid @RequestBody LoginRequest request) {
+            @Parameter(description = "User details to log into system", required = true) @Valid @RequestBody LoginRequest request) {
 
         log.atInfo().log("User %s trying to login", request.getUsernameOrEmail());
         var user = repository.findByUsernameIgnoreCaseOrEmailIgnoreCase(request.getUsernameOrEmail(), request.getUsernameOrEmail()).

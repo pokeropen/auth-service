@@ -17,11 +17,24 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Optional;
 
-import static com.open.poker.constants.TestConstants.*;
+import static com.open.poker.constants.TestConstants.CORRUPT_TOKEN;
+import static com.open.poker.constants.TestConstants.INVALID_TOKEN_WITH_BEARER;
+import static com.open.poker.constants.TestConstants.PASSWORD;
+import static com.open.poker.constants.TestConstants.PASSWORD_NEW;
+import static com.open.poker.constants.TestConstants.TOKEN;
+import static com.open.poker.constants.TestConstants.VALID_TOKEN;
+import static com.open.poker.constants.TestConstants.cpr;
+import static com.open.poker.constants.TestConstants.user;
 import static com.open.poker.utils.PasswordUtil.hashPwd;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
