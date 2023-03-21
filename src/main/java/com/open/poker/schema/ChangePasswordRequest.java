@@ -1,28 +1,33 @@
 package com.open.poker.schema;
 
-import lombok.NonNull;
-import lombok.Value;
-import lombok.With;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.With;
 
-@Value
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChangePasswordRequest {
 
     @NonNull
     @With
     @NotBlank(message = "Old Password Can't be empty")
     @Size(min = 8, max = 20)
-    private final String oldPassword;
+    private String oldPassword;
     @NonNull
     @With
     @NotBlank(message = "New Password Can't be empty")
     @Size(min = 8, max = 20)
-    private final String newPassword;
+    private String newPassword;
     @NonNull
     @With
     @NotBlank(message = "Confirm Password Can't be empty")
     @Size(min = 8, max = 20)
-    private final String confirmPassword;
+    private String confirmPassword;
 }
