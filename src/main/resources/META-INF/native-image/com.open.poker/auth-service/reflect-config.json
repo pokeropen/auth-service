@@ -375,10 +375,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"authorize","parameterTypes":["java.lang.String"] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.open.poker.controller.ChangePasswordResource",
@@ -465,11 +462,6 @@
   "methods":[{"name":"<init>","parameterTypes":["com.open.poker.model.UserProfile"] }]
 },
 {
-  "name":"com.open.poker.model.UserProfile_Accessor_ap65m7",
-  "queryAllPublicConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["com.open.poker.model.UserProfile"] }]
-},
-{
   "name":"com.open.poker.repository.UserProfileRepository",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
@@ -491,7 +483,6 @@
   "name":"com.open.poker.schema.SignupRequest",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
@@ -737,58 +728,6 @@
   "methods":[{"name":"getSchema","parameterTypes":[] }]
 },
 {
-  "name":"graphql.PublicApi",
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"graphql.PublicSpi",
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"graphql.execution.instrumentation.Instrumentation",
-  "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true,
-  "methods":[
-    {"name":"beginExecuteOperation","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecuteOperationParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginExecutionStrategy","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionStrategyParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginField","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginFieldComplete","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters"] }, 
-    {"name":"beginFieldComplete","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginFieldFetch","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginFieldListComplete","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters"] }, 
-    {"name":"beginFieldListComplete","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginParse","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginSubscribedFieldEvent","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldParameters"] }, 
-    {"name":"beginSubscribedFieldEvent","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"beginValidation","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationValidationParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"createState","parameterTypes":[] }, 
-    {"name":"instrumentDataFetcher","parameterTypes":["graphql.schema.DataFetcher","graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters"] }, 
-    {"name":"instrumentDocumentAndVariables","parameterTypes":["graphql.execution.instrumentation.DocumentAndVariables","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"instrumentDocumentAndVariables","parameterTypes":["graphql.execution.instrumentation.DocumentAndVariables","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"instrumentExecutionContext","parameterTypes":["graphql.execution.ExecutionContext","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"instrumentExecutionContext","parameterTypes":["graphql.execution.ExecutionContext","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"instrumentExecutionInput","parameterTypes":["graphql.ExecutionInput","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"instrumentExecutionInput","parameterTypes":["graphql.ExecutionInput","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"instrumentExecutionResult","parameterTypes":["graphql.ExecutionResult","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"instrumentExecutionResult","parameterTypes":["graphql.ExecutionResult","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"instrumentSchema","parameterTypes":["graphql.schema.GraphQLSchema","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"instrumentSchema","parameterTypes":["graphql.schema.GraphQLSchema","graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }
-  ]
-},
-{
-  "name":"graphql.execution.instrumentation.SimpleInstrumentation",
-  "queryAllDeclaredMethods":true,
-  "methods":[
-    {"name":"beginExecuteOperation","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecuteOperationParameters"] }, 
-    {"name":"beginExecution","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"beginExecutionStrategy","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionStrategyParameters"] }, 
-    {"name":"beginField","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldParameters"] }, 
-    {"name":"beginFieldFetch","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters"] }, 
-    {"name":"beginParse","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters"] }, 
-    {"name":"beginValidation","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationValidationParameters"] }
-  ]
-},
-{
   "name":"io.jsonwebtoken.Claims",
   "queryAllDeclaredMethods":true
 },
@@ -826,21 +765,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"io.jsonwebtoken.impl.DefaultJwtParserBuilder",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"io.jsonwebtoken.impl.JwtMap",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.jsonwebtoken.impl.compression.DeflateCompressionCodec",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"io.jsonwebtoken.impl.compression.GzipCompressionCodec",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"io.micrometer.common.lang.NonNullApi",
@@ -853,9 +780,6 @@
 {
   "name":"io.micrometer.common.lang.Nullable",
   "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.micrometer.context.ContextSnapshot"
 },
 {
   "name":"io.micrometer.core.annotation.Timed"
@@ -2438,12 +2362,6 @@
   "name":"java.net.SocketPermission"
 },
 {
-  "name":"java.net.URI",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true
-},
-{
   "name":"java.net.URLClassLoader",
   "queryAllDeclaredMethods":true
 },
@@ -3593,9 +3511,6 @@
   "name":"org.postgresql.Driver"
 },
 {
-  "name":"org.reactivestreams.Publisher"
-},
-{
   "name":"org.slf4j.Logger"
 },
 {
@@ -3682,10 +3597,6 @@
     {"name":"<init>","parameterTypes":[] }, 
     {"name":"springDataWebPropertiesProvider","parameterTypes":["java.util.Optional"] }
   ]
-},
-{
-  "name":"org.springdoc.core.configuration.SpringDocConfiguration$SpringDocWebFluxSupportConfiguration",
-  "queryAllDeclaredMethods":true
 },
 {
   "name":"org.springdoc.core.configuration.SpringDocConfiguration$WebConversionServiceConfiguration",
@@ -3786,11 +3697,6 @@
 {
   "name":"org.springdoc.core.converters.SortOpenAPIConverter",
   "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"resolve","parameterTypes":["io.swagger.v3.core.converter.AnnotatedType","io.swagger.v3.core.converter.ModelConverterContext","java.util.Iterator"] }]
-},
-{
-  "name":"org.springdoc.core.converters.WebFluxSupportConverter",
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"resolve","parameterTypes":["io.swagger.v3.core.converter.AnnotatedType","io.swagger.v3.core.converter.ModelConverterContext","java.util.Iterator"] }]
 },
@@ -4893,11 +4799,6 @@
   ]
 },
 {
-  "name":"org.springframework.boot.actuate.autoconfigure.health.AutoConfiguredReactiveHealthContributorRegistry",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"registerContributor","parameterTypes":["java.lang.String","java.lang.Object"] }]
-},
-{
   "name":"org.springframework.boot.actuate.autoconfigure.health.ConditionalOnEnabledHealthIndicator",
   "queryAllDeclaredMethods":true
 },
@@ -4990,8 +4891,7 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.springframework.boot.actuate.autoconfigure.health.ReactiveHealthEndpointConfiguration",
-  "queryAllDeclaredMethods":true
+  "name":"org.springframework.boot.actuate.autoconfigure.health.ReactiveHealthEndpointConfiguration"
 },
 {
   "name":"org.springframework.boot.actuate.autoconfigure.info.ConditionalOnEnabledInfoContributor",
@@ -5404,10 +5304,6 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"postProcessAfterInitialization","parameterTypes":["java.lang.Object","java.lang.String"] }]
-},
-{
-  "name":"org.springframework.boot.actuate.autoconfigure.observation.graphql.GraphQlObservationAutoConfiguration",
-  "queryAllDeclaredMethods":true
 },
 {
   "name":"org.springframework.boot.actuate.autoconfigure.observation.web.client.HttpClientObservationsAutoConfiguration",
@@ -5991,16 +5887,6 @@
   ]
 },
 {
-  "name":"org.springframework.boot.actuate.health.DefaultReactiveHealthContributorRegistry",
-  "queryAllDeclaredMethods":true,
-  "methods":[
-    {"name":"getContributor","parameterTypes":["java.lang.String"] }, 
-    {"name":"iterator","parameterTypes":[] }, 
-    {"name":"registerContributor","parameterTypes":["java.lang.String","java.lang.Object"] }, 
-    {"name":"unregisterContributor","parameterTypes":["java.lang.String"] }
-  ]
-},
-{
   "name":"org.springframework.boot.actuate.health.HealthContributor",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
@@ -6056,11 +5942,6 @@
   "name":"org.springframework.boot.actuate.health.PingHealthIndicator",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
-},
-{
-  "name":"org.springframework.boot.actuate.health.ReactiveHealthContributorRegistry",
-  "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true
 },
 {
   "name":"org.springframework.boot.actuate.health.SimpleHttpCodeStatusMapper",
@@ -7610,11 +7491,7 @@
 {
   "name":"org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController",
   "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[
-    {"name":"error","parameterTypes":["jakarta.servlet.http.HttpServletRequest"] }, 
-    {"name":"errorHtml","parameterTypes":["jakarta.servlet.http.HttpServletRequest","jakarta.servlet.http.HttpServletResponse"] }
-  ]
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"org.springframework.boot.autoconfigure.web.servlet.error.DefaultErrorViewResolver",
@@ -9491,30 +9368,7 @@
   ]
 },
 {
-  "name":"org.springframework.graphql.observation.GraphQlObservationInstrumentation",
-  "queryAllDeclaredMethods":true,
-  "methods":[
-    {"name":"beginExecution","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters","graphql.execution.instrumentation.InstrumentationState"] }, 
-    {"name":"createState","parameterTypes":["graphql.execution.instrumentation.parameters.InstrumentationCreateStateParameters"] }, 
-    {"name":"instrumentDataFetcher","parameterTypes":["graphql.schema.DataFetcher","graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters","graphql.execution.instrumentation.InstrumentationState"] }
-  ]
-},
-{
   "name":"org.springframework.http.HttpStatus"
-},
-{
-  "name":"org.springframework.http.ProblemDetail",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
-  "methods":[
-    {"name":"getDetail","parameterTypes":[] }, 
-    {"name":"getInstance","parameterTypes":[] }, 
-    {"name":"getProperties","parameterTypes":[] }, 
-    {"name":"getStatus","parameterTypes":[] }, 
-    {"name":"getTitle","parameterTypes":[] }, 
-    {"name":"getType","parameterTypes":[] }
-  ]
 },
 {
   "name":"org.springframework.http.ReactiveHttpInputMessage"
@@ -9596,11 +9450,6 @@
 },
 {
   "name":"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"org.springframework.http.converter.json.ProblemDetailJacksonMixin",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
 },
@@ -11039,12 +10888,6 @@
 },
 {
   "name":"org.webjars.WebJarAssetLocator"
-},
-{
-  "name":"reactor.core.publisher.Flux"
-},
-{
-  "name":"reactor.core.publisher.Mono"
 },
 {
   "name":"sun.management.ClassLoadingImpl",
