@@ -26,6 +26,12 @@
       "pattern":"\\QMETA-INF/services/ch.qos.logback.classic.spi.Configurator\\E"
     }, 
     {
+      "pattern":"\\QMETA-INF/services/io.jsonwebtoken.CompressionCodec\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/io.jsonwebtoken.io.Deserializer\\E"
+    }, 
+    {
       "pattern":"\\QMETA-INF/services/io.jsonwebtoken.io.Serializer\\E"
     }, 
     {
@@ -1367,6 +1373,9 @@
       "pattern":"\\Qorg/springframework/web/servlet/mvc/method/annotation/ResponseEntityExceptionHandler.class\\E"
     }, 
     {
+      "pattern":"\\Qorg/springframework/web/util/HtmlCharacterEntityReferences.properties\\E"
+    }, 
+    {
       "pattern":"\\Qspringdoc.config.properties\\E"
     }
   ]},
@@ -1600,6 +1609,13 @@
       "locales":[
         "", 
         "und"
+      ]
+    }, 
+    {
+      "name":"org.hibernate.validator.ValidationMessages",
+      "locales":[
+        "", 
+        "en"
       ]
     }
   ]
