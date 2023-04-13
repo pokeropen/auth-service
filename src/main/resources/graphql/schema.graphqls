@@ -1,0 +1,18 @@
+type Query {
+    userByName(name: String): UserProfile
+    userByEmail(email: String): UserProfile
+    userById(id: ID): UserProfile
+    findAllUsers: [UserProfile]!
+    countUsers: Float!
+}
+
+type UserProfile {
+    id: ID!
+    username: String!
+    email: String!
+    firstName: String!
+    lastName: String
+    age: Int!
+    isBlocked: Boolean
+    isDeleted: Boolean
+}
